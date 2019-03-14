@@ -43,6 +43,8 @@ namespace ChatForm.Forms
 
         public void addError(string errorMessage)
         {
+            loading.Visible = false;
+            button1.Enabled = true;
             ErrorLable.Visible = true;
             ErrorLable.Text = errorMessage;
         }
@@ -77,6 +79,8 @@ namespace ChatForm.Forms
             else
             {
                 Program.chatHub.Invoke("userRegistration", textBox1.Text, textBox2.Text);
+                loading.Visible = true;
+                button1.Enabled = false;
             }
         }
     }

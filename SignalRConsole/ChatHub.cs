@@ -38,5 +38,25 @@ namespace SignalRConsole
                 }
             }
         }
+        public void userAuth(string login, string pass)
+        {
+            User user = null;
+            try
+            {
+                user = DB.Users.Where(u => u.Login == login && u.Password == pass).FirstOrDefault();
+                if (user != null)
+                {
+                    Clients.Caller.succesAuth();
+                }
+                else
+                {
+                    Clients.Caller.cantAuthThisUser("Не правильный логин или пароль");
+                }
+            }
+            catch
+            {
+                Clients.Caller.cantAuthThisUser("Не удалось подключиться к серверам баз данных");
+            }
+        }
     }
 }

@@ -35,7 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.ErrorToConnect = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.ErrorLable = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -147,18 +147,18 @@
             this.ErrorToConnect.TabIndex = 6;
             this.ErrorToConnect.Text = "Не удалось подключиться к серверу";
             // 
-            // label4
+            // ErrorLable
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label4.Font = new System.Drawing.Font("Microsoft YaHei", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(118, 472);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(228, 20);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "Неверный логин или пароль";
-            this.label4.Visible = false;
+            this.ErrorLable.AutoSize = true;
+            this.ErrorLable.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.ErrorLable.Font = new System.Drawing.Font("Microsoft YaHei", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ErrorLable.ForeColor = System.Drawing.Color.Red;
+            this.ErrorLable.Location = new System.Drawing.Point(118, 472);
+            this.ErrorLable.Name = "ErrorLable";
+            this.ErrorLable.Size = new System.Drawing.Size(228, 20);
+            this.ErrorLable.TabIndex = 8;
+            this.ErrorLable.Text = "Неверный логин или пароль";
+            this.ErrorLable.Visible = false;
             // 
             // LoginForm
             // 
@@ -168,7 +168,7 @@
             this.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.Group_7;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(465, 594);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.ErrorLable);
             this.Controls.Add(this.ErrorToConnect);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label1);
@@ -200,7 +200,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button3;
         public System.Windows.Forms.Label ErrorToConnect;
-        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Label ErrorLable;
         public System.Windows.Forms.TextBox textBox1;
     }
 }

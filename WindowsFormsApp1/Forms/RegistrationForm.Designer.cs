@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegistrationForm));
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -35,6 +36,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.ErrorLable = new System.Windows.Forms.Label();
+            this.loading = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.loading)).BeginInit();
             this.SuspendLayout();
             // 
             // button2
@@ -130,6 +133,20 @@
             this.ErrorLable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ErrorLable.Visible = false;
             // 
+            // loading
+            // 
+            this.loading.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.loading.Cursor = System.Windows.Forms.Cursors.Default;
+            this.loading.Image = global::WindowsFormsApp1.Properties.Resources.loading__2_;
+            this.loading.InitialImage = ((System.Drawing.Image)(resources.GetObject("loading.InitialImage")));
+            this.loading.Location = new System.Drawing.Point(207, 476);
+            this.loading.Name = "loading";
+            this.loading.Size = new System.Drawing.Size(51, 50);
+            this.loading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.loading.TabIndex = 14;
+            this.loading.TabStop = false;
+            this.loading.Visible = false;
+            // 
             // RegistrationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 16F);
@@ -137,6 +154,7 @@
             this.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.Group_8222;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(465, 594);
+            this.Controls.Add(this.loading);
             this.Controls.Add(this.ErrorLable);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
@@ -151,6 +169,7 @@
             this.Name = "RegistrationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Registeration";
+            ((System.ComponentModel.ISupportInitialize)(this.loading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -165,5 +184,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label ErrorLable;
+        private System.Windows.Forms.PictureBox loading;
     }
 }

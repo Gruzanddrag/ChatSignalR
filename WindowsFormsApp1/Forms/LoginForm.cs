@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft;
 using Newtonsoft.Json;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace ChatForm.Forms
 {
@@ -30,7 +31,25 @@ namespace ChatForm.Forms
             {
                 ErrorToConnect.Visible = false;
             }
+            Program.chatHub.On<string>("cantAuthThisUser", (message) => 
+                this.Invoke((Action)(() => addError(message)
+            )));
+            Program.chatHub.On("successAuth", () =>
+                this.Invoke((Action)(() =>
+                {
+                    ChatsFrom newChatForm = new ChatsFrom(this);
+                    this.Visible = false;
+                    newChatForm.Show();
+                }
+            )));
         }
+
+        public void addError(string errorMessage)
+        {
+            ErrorLable.Visible = true;
+            ErrorLable.Text = errorMessage;
+        }
+
 
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -59,6 +78,7 @@ namespace ChatForm.Forms
 
         private void button3_Click(object sender, EventArgs e)
         {
+            Program.chatHub.Invoke("userAuth", textBox1.Text, textBox2.Text);
         }
 
         private void textBox1_Enter(object sender, EventArgs e)
