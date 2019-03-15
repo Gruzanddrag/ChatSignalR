@@ -14,21 +14,21 @@ namespace ChatForm.Forms
 {
     public partial class ChatsFrom : Form
     {
-        LoginForm Main_form;
-        public void addMessage(ListBox listbox, string message)
+        string curUserLogin;
+        public ChatsFrom(string userLogin)
         {
-            listbox.Items.Add(message);
-            if(message.IndexOf("покинул чат") != -1)
-            {
-                string deletedUser = "";
-                int i = 0;
-                while(message[i] != ':')
-                {
-                    deletedUser += message[i];
-                    i++;
-                }
-                //deleteFromListBox(listBox3, deletedUser.ToString());
-            }
+            InitializeComponent();
+            curUserLogin = userLogin;
+            listBox1.DrawItem += new DrawItemEventHandler(SetForeColor);
+            listBox1.DrawMode = DrawMode.OwnerDrawFixed;
+            listBox3.Items.Add(userLogin);
+            Program.chatHub.On<string>("addMessage", (message) =>
+                 this.Invoke((Action)(() =>
+                    {
+                        addMessage(message);
+                    }
+            )));
+            Program.chatHub.Invoke("userJoinChat", userLogin);
         }
         public void deleteFromListBox(ListBox listbox, string message)
         {
@@ -42,7 +42,7 @@ namespace ChatForm.Forms
                 Brush myBrush = Brushes.White;
 
                 string sayi = ((ListBox)sender).Items[e.Index].ToString();
-                if (sayi.IndexOf("вошел в чат") != -1 || sayi.IndexOf("покинул чат") != -1)
+                if (sayi.IndexOf(':') == -1 && sayi.IndexOf("вошел в чат") != -1 || sayi.IndexOf("покинул чат") != -1)
                 {
                     myBrush = Brushes.Orchid;
 
@@ -61,26 +61,12 @@ namespace ChatForm.Forms
 
             }
         }
-        public ChatsFrom(LoginForm f)
-        {
-            InitializeComponent();
-            Main_form = f;
-            listBox1.DrawItem += new DrawItemEventHandler(SetForeColor);
-            listBox1.DrawMode = DrawMode.OwnerDrawFixed;
-            byte[] data = Encoding.Unicode.GetBytes("вошел в чат");
-            //Program.stream.Write(data, 0, data.Length);
-            //Thread receiveThread = new Thread(new ParameterizedThreadStart(Program.ReceiveMessage));
-            //receiveThread.Start(this);
-            listBox3.Items.Add(f.textBox1.Text);
-            
-            //пользователь вошел в чат
-        }
+        
 
         private void ChatFrom_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //Program.Disconnect();
-            Thread.Sleep(400);
-            Application.Exit();
+            Program.chatHub.Invoke("userDissconnectChat", curUserLogin);
+            Program.MainForm.Close();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -96,8 +82,7 @@ namespace ChatForm.Forms
                 textBox1.Text = null;
                 try
                 {
-                    byte[] data = Encoding.Unicode.GetBytes(message);
-                    //Program.stream.Write(data, 0, data.Length);
+                    Program.chatHub.Invoke("sendMessage", curUserLogin, message);
                 }
                 catch
                 {
@@ -105,6 +90,11 @@ namespace ChatForm.Forms
                 }
 
             }
+        }
+
+        public void addMessage(string message)
+        {
+            listBox1.Items.Add(message);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

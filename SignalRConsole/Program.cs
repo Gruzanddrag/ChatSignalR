@@ -17,7 +17,7 @@ namespace SignalRConsole
     class Program
     {
         static IDisposable SignalR;
-
+        static public List<string> usersInChat = new List<string>();
         static void Main(string[] args)
         {
             string url = "http://127.0.0.1:8088";

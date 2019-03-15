@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatHub.cs" />
+    <Compile Include="Model\Message.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserContext.cs" />
     <Compile Include="Program.cs" />

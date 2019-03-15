@@ -29,16 +29,19 @@ namespace ChatForm.Forms
             Program.chatHub.On<string>("cantRegistrateThisUser", (message) =>
                  this.Invoke((Action)(() =>
                      addError(message)
-                 )));
-            Program.chatHub.On("succecRegistration", () =>
-                 this.Invoke((Action)(() =>
-                     {
-                         ChatsFrom newChatForm = new ChatsFrom(Main_Form);
-                         Main_Form.Visible = false;
-                         newChatForm.Show();
-                         this.Close();
-                     }
-                 )));
+            )));
+            Program.chatHub.On("successRegistration", () =>
+                 this.Invoke((Action)(() => 
+                    successRegist()
+            )));
+        }
+
+        public void successRegist()
+        {
+            ChatsFrom newChatForm = new ChatsFrom(textBox1.Text);
+            Main_Form.Visible = false;
+            newChatForm.Show();
+            this.Close();
         }
 
         public void addError(string errorMessage)
@@ -82,6 +85,11 @@ namespace ChatForm.Forms
                 loading.Visible = true;
                 button1.Enabled = false;
             }
+        }
+
+        private void RegistrationForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

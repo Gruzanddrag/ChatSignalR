@@ -20,7 +20,9 @@ namespace ChatForm.Forms
 
         public LoginForm(bool isConnected)
         {
-            InitializeComponent(); 
+            InitializeComponent();
+            ErrorLable.Width = this.Width;
+            ErrorLable.AutoSize = false;
             if (isConnected == false)
             {
                 ErrorToConnect.Visible = true;
@@ -35,17 +37,21 @@ namespace ChatForm.Forms
                 this.Invoke((Action)(() => addError(message)
             )));
             Program.chatHub.On("successAuth", () =>
-                this.Invoke((Action)(() =>
-                {
-                    ChatsFrom newChatForm = new ChatsFrom(this);
-                    this.Visible = false;
-                    newChatForm.Show();
-                }
+                this.Invoke((Action)(() => 
+                successAuth()
             )));
+        }
+
+        public void successAuth()
+        {
+            ChatsFrom newChatForm = new ChatsFrom(textBox1.Text);
+            this.Visible = false;
+            newChatForm.Show();
         }
 
         public void addError(string errorMessage)
         {
+            loading.Visible = false;
             ErrorLable.Visible = true;
             ErrorLable.Text = errorMessage;
         }
@@ -78,6 +84,7 @@ namespace ChatForm.Forms
 
         private void button3_Click(object sender, EventArgs e)
         {
+            loading.Visible = true;
             Program.chatHub.Invoke("userAuth", textBox1.Text, textBox2.Text);
         }
 

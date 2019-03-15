@@ -12,6 +12,7 @@ namespace ChatForm
     static class Program
     {
         static public IHubProxy chatHub;
+        static public LoginForm MainForm;
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -32,7 +33,8 @@ namespace ChatForm
             }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm(isConnected));
+            MainForm = new LoginForm(isConnected);
+            Application.Run(MainForm);
         }
     }
 }

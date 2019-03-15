@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
@@ -36,6 +37,8 @@
             this.button3 = new System.Windows.Forms.Button();
             this.ErrorToConnect = new System.Windows.Forms.Label();
             this.ErrorLable = new System.Windows.Forms.Label();
+            this.loading = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.loading)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -153,12 +156,27 @@
             this.ErrorLable.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.ErrorLable.Font = new System.Drawing.Font("Microsoft YaHei", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ErrorLable.ForeColor = System.Drawing.Color.Red;
-            this.ErrorLable.Location = new System.Drawing.Point(118, 472);
+            this.ErrorLable.Location = new System.Drawing.Point(4, 472);
             this.ErrorLable.Name = "ErrorLable";
             this.ErrorLable.Size = new System.Drawing.Size(228, 20);
             this.ErrorLable.TabIndex = 8;
             this.ErrorLable.Text = "Неверный логин или пароль";
+            this.ErrorLable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.ErrorLable.Visible = false;
+            // 
+            // loading
+            // 
+            this.loading.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.loading.Cursor = System.Windows.Forms.Cursors.Default;
+            this.loading.Image = global::WindowsFormsApp1.Properties.Resources.loading__2_;
+            this.loading.InitialImage = ((System.Drawing.Image)(resources.GetObject("loading.InitialImage")));
+            this.loading.Location = new System.Drawing.Point(207, 472);
+            this.loading.Name = "loading";
+            this.loading.Size = new System.Drawing.Size(51, 50);
+            this.loading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.loading.TabIndex = 15;
+            this.loading.TabStop = false;
+            this.loading.Visible = false;
             // 
             // LoginForm
             // 
@@ -168,6 +186,7 @@
             this.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.Group_7;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(465, 594);
+            this.Controls.Add(this.loading);
             this.Controls.Add(this.ErrorLable);
             this.Controls.Add(this.ErrorToConnect);
             this.Controls.Add(this.button3);
@@ -187,6 +206,7 @@
             this.Text = "Login";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Log_Reg_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Log_Reg_MouseMove);
+            ((System.ComponentModel.ISupportInitialize)(this.loading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,6 +222,7 @@
         public System.Windows.Forms.Label ErrorToConnect;
         public System.Windows.Forms.Label ErrorLable;
         public System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.PictureBox loading;
     }
 }
 
