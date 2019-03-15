@@ -43,6 +43,11 @@ namespace SignalRConsole
                 }
             }
         }
+        /// <summary>
+        ///     User Auth
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="pass"></param>
         public void userAuth(string login, string pass)
         {
             User user = null;
@@ -76,19 +81,45 @@ namespace SignalRConsole
 
         public void sendMessage(string userLogin, string message)
         {
-            message = String.Format("{0}: {1}", userLogin, message);
-            Console.WriteLine(message);
-            Clients.All.addMessage(message);
+            try
+            {
+                DB.Messages.Add(new Message { userLogin = userLogin, textMessage = message });
+                DB.SaveChanges();
+                if (Program.listLastMessage.Count() >= Program.numOfLastMessages)
+                {
+                    Program.listLastMessage.Add(new Message { userLogin = userLogin, textMessage = message });
+                    for (int i = 1; i <= Program.numOfLastMessages; i++)
+                    {
+                        Program.listLastMessage[i - 1] = Program.listLastMessage[i];
+                    }
+                    Program.listLastMessage.RemoveAt(Program.numOfLastMessages);
+                }
+                else
+                {
+                    Program.listLastMessage.Add(new Message { userLogin = userLogin, textMessage = message });
+                }
+                message = String.Format("{0}: {1}", userLogin, message);
+                Console.WriteLine(message);
+                Clients.All.addMessage(message);
+            }
+            catch
+            {
+                Clients.Caller.throwExceptiontoChat("Разрыв соединения с сервером баз данных");
+            }
         }
     
         public void userJoinChat(string userLogin)
         {
+            Clients.Caller.addLastMessages(Program.listLastMessage);
+            Clients.Caller.addAllUser(Program.usersInChat);
+            Clients.Others.addUser(userLogin);
             Console.WriteLine(userLogin + " connected");
             Program.usersInChat.Add(userLogin);
             Clients.All.addMessage(userLogin + " вошел в чат");
         }
         public void userDissconnectChat(string userLogin)
         {
+            Clients.Others.deleteUser(userLogin);
             Console.WriteLine(userLogin + " dissconnected");
             Program.usersInChat.Remove(userLogin);
             Clients.Others.addMessage(userLogin + " покинул чат");

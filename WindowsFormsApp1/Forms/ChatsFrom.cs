@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.AspNet.SignalR.Client;
+using WindowsFormsApp1;
 
 namespace ChatForm.Forms
 {
@@ -28,11 +29,53 @@ namespace ChatForm.Forms
                         addMessage(message);
                     }
             )));
+            Program.chatHub.On<List<MessageEx>>("addLastMessages", (messages) =>
+                 this.Invoke((Action)(() =>
+                 {
+                     string curString;
+                     foreach (var m in messages)
+                     {
+                         curString = String.Format("{0}: {1}", m.userLogin, m.textMessage);
+                         addMessage(curString);
+                     }
+                 }
+            )));
+            Program.chatHub.On<string>("throwExceptiontoChat", (ex) =>
+                 this.Invoke((Action)(() =>
+                 {
+                     ex = String.Format("Ошибка! {0}", ex);
+                     addMessage(ex);
+                 }
+            )));
+            Program.chatHub.On<string>("addUser", (newUserLogin) =>
+                 this.Invoke((Action)(() =>
+                 {
+                     addUser(newUserLogin);
+                 }
+            )));
+            Program.chatHub.On<List<string>>("addAllUser", (userInChat) =>
+                 this.Invoke((Action)(() =>
+                 {
+                     foreach (var u in userInChat)
+                     {
+                         if(u != userLogin)
+                         {
+                             addUser(u);
+                         }
+                     }
+                 }
+            )));
+            Program.chatHub.On<string>("deleteUser", (delUserLogin) =>
+                 this.Invoke((Action)(() =>
+                 {
+                     deleteFromListBox(delUserLogin);
+                 }
+            )));
             Program.chatHub.Invoke("userJoinChat", userLogin);
         }
-        public void deleteFromListBox(ListBox listbox, string message)
+        public void deleteFromListBox(string delUserLogin)
         {
-            listbox.Items.Remove(message);
+            listBox3.Items.Remove(delUserLogin);
         }
         public void SetForeColor(object sender, DrawItemEventArgs e)
         {
@@ -45,7 +88,10 @@ namespace ChatForm.Forms
                 if (sayi.IndexOf(':') == -1 && sayi.IndexOf("вошел в чат") != -1 || sayi.IndexOf("покинул чат") != -1)
                 {
                     myBrush = Brushes.Orchid;
-
+                }
+                else if(sayi.IndexOf(':') == -1 && sayi.IndexOf("Ошибка!") != -1)
+                {
+                    myBrush = Brushes.Red;
                 }
                 else
                 {
@@ -76,7 +122,7 @@ namespace ChatForm.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text != null)
+            if(textBox1.Text != null && textBox1.Text != "")
             {
                 string message = textBox1.Text;
                 textBox1.Text = null;
@@ -95,6 +141,11 @@ namespace ChatForm.Forms
         public void addMessage(string message)
         {
             listBox1.Items.Add(message);
+        }
+
+        public void addUser(string userLogin)
+        {
+            listBox3.Items.Add(userLogin);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
